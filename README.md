@@ -68,3 +68,32 @@ os tipos são instaladas nesse formato: `@types/*lib_name*`
     console.log(response.json(user))
   }
 ```
+
+---
+
+- interface: declarar uma tipagem de um Object...
+
+```ts
+import { Schema, model, Document } from "mongoose";
+
+// extende o Document para não perder as props padrões do model<T extends Document>
+interface UserInterface extends Document {
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+}
+
+const UserSchema = new Schema(
+  {
+    email: String,
+    firstName: String,
+    lastName: String,
+  },
+  {
+    timestamps: true,
+  }
+);
+
+// o ts vai saber quais props ele (User) recebe por causa da *interface*
+export default model<UserInterface>("User", UserSchema);
+```
